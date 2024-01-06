@@ -10,12 +10,12 @@ from termcolor import cprint
 with open("d3input.txt") as file:
     data = file.readlines()
 
-def getnumber(i, j):
-    n = 0
-    while data[i][j].isdigit() == True:
-        n = n*10 + int(data[i][j])
-        j += 1
-    return n
+def getnumber(row, col):
+    number = 0
+    while data[row][col].isdigit() == True:
+        number = number*10 + int(data[row][col])
+        col += 1
+    return number
 
 def containsSymbol(row, start_col, end_col):
     for col in range(start_col, end_col):
@@ -37,18 +37,18 @@ def checksymbol(row, col, number):
 
 sum = 0
 
-for i in range(0, len(data)):
-    j = 0
-    while j < len(data[i]):
-        if data[i][j].isdigit() == True:
-            print("Digit: " + str(data[i][j]))
-            number = getnumber(i, j)
-            print(f"i: {i}   j: {j}")
+for row in range(0, len(data)):
+    col = 0
+    while col < len(data[row]):
+        if data[row][col].isdigit() == True:
+            cprint("Digit: " + str(data[row][col]), "light_yellow")
+            number = getnumber(row, col)
+            print(f"Row: {row}   Col: {col}   Number: {number}")
             
-            print(checksymbol(i, j, number))
+            print(checksymbol(row, col, number))
         #     if checksymbol(i,j, number):
         #         sum += number
         #     j += len(str(number))-1
-        j += 1
+        col += 1
 
 print(sum)
