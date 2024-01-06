@@ -5,6 +5,7 @@
 #If number located to left and right, x10 and add to sum
 #If number located to right but not left, check if number to right has numebrs to l and r
 #If it does, multiply by 10^2 and add to sum, else multiply by 10 and add to sum
+from termcolor import cprint
 
 with open("d3input.txt") as file:
     data = file.readlines()
@@ -16,18 +17,23 @@ def getnumber(i, j):
         j += 1
     return n
 
-def issymbol(row, start_col, end_col):
-    #parameters:
-        #column (looped): cycle through each column from a start to an end
-        #row (looped): cycle through each rown in column above and below the row
+def containsSymbol(row, start_col, end_col):
     for col in range(start_col, end_col):
+        print('checking symbol at row: ' + str(row) + ' col : ' + str(col) + ' for symbol')
         if data[row][col].isdigit() == False and data[row][col] != '.':
             return True
     return False
 
 def checksymbol(row, col, number):
-    for i in range(-1, 1):
-        print(issymbol(row+i, max(0, col-1), col+1))
+        #check to the left 
+        symbol_left = containsSymbol(row, max(col-1,0), col)
+        if symbol_left == True:
+            cprint('Symbol found on left', 'light_blue')
+
+        #check to the right
+        symbol_right = containsSymbol(row, col+len(str(number)), min(col+len(str(number))+1, len(data[row])))
+        if symbol_right== True:
+            cprint('Symbol found on right', 'red')
 
 sum = 0
 
@@ -38,6 +44,7 @@ for i in range(0, len(data)):
             print("Digit: " + str(data[i][j]))
             number = getnumber(i, j)
             print(f"i: {i}   j: {j}")
+            
             print(checksymbol(i, j, number))
         #     if checksymbol(i,j, number):
         #         sum += number
