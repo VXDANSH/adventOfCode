@@ -18,8 +18,9 @@ def getnumber(row, col):
     return number
 
 def containsSymbol(row, start_col, end_col):
+    print(data[row])
     for col in range(start_col, end_col):
-        print('checking symbol at row: ' + str(row) + ' col : ' + str(col) + ' for symbol')
+        print('checking symbol at row: ' + str(row) + ' col : ' + str(col) + ' for symbol : ' + data[row][col])
         if data[row][col].isdigit() == False and data[row][col] != '.':
             return True
     return False
@@ -36,11 +37,22 @@ def checksymbol(row, col, number):
             cprint('Symbol found on right', 'red')
         
         #check to the top
-            
+        top_row = max(row-1,0)
+        start_col = max(col-1,0)
+        end_col = min(col+len(str(number))+1, len(data[row]))
+        symbol_top = containsSymbol(top_row, start_col, end_col)
+        if symbol_top == True:
+            cprint('Symbol found on top', 'blue')  
 
-        #check to the bottom
-
-        return symbol_left or symbol_right
+        # check to the bottom
+        bottom_row = min(row+1, len(data)-1)
+        start_col = max(col-1,0)
+        end_col = min(col+len(str(number))+1, len(data[row]))
+        symbol_bottom = containsSymbol(bottom_row, start_col, end_col)
+        if symbol_bottom == True:
+            cprint('Symbol found on bottom', 'yellow')
+        cprint('Symbol left : ' + str(symbol_left) + ' Symbol right : ' + str(symbol_right) + ' Symbol top : ' + str(symbol_top) + ' Symbol bottom : ' + str(symbol_bottom), 'green')
+        return symbol_left or symbol_right or symbol_top or symbol_bottom
 
 sum = 0
 
@@ -54,7 +66,8 @@ for row in range(0, len(data)):
             # print(checksymbol(row, col, number))
             if checksymbol(row, col, number):
                 sum += number
+                cprint("Adding: " + str(number) + "  Sum: " + str(sum), "light_red")
             col += len(str(number))-1
         col += 1
 
-print("Sum : " + str(sum))
+cprint("Sum of the numbers : " + str(sum), "light_red")
