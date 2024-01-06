@@ -34,6 +34,13 @@ def checksymbol(row, col, number):
         symbol_right = containsSymbol(row, col+len(str(number)), min(col+len(str(number))+1, len(data[row])))
         if symbol_right== True:
             cprint('Symbol found on right', 'red')
+        
+        #check to the top
+            
+
+        #check to the bottom
+
+        return symbol_left or symbol_right
 
 sum = 0
 
@@ -44,11 +51,10 @@ for row in range(0, len(data)):
             cprint("Digit: " + str(data[row][col]), "light_yellow")
             number = getnumber(row, col)
             print(f"Row: {row}   Col: {col}   Number: {number}")
-            
-            print(checksymbol(row, col, number))
-        #     if checksymbol(i,j, number):
-        #         sum += number
-        #     j += len(str(number))-1
+            # print(checksymbol(row, col, number))
+            if checksymbol(row, col, number):
+                sum += number
+            col += len(str(number))-1
         col += 1
 
-print(sum)
+print("Sum : " + str(sum))
